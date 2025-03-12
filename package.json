@@ -5,7 +5,9 @@
     "codex editor",
     "image",
     "editor.js",
-    "editorjs"
+    "editorjs",
+    "image preview",
+    "editorjs preview"
   ],
   "description": "Image Tool for Editor.js",
   "license": "MIT",
