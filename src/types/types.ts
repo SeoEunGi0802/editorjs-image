@@ -40,7 +40,7 @@ export interface ActionConfig {
    * An optional action function to be executed when the tune is activated.
    */
   action?: Function;
-};
+}
 
 /**
  * UploadResponseFormat interface representing the response format expected from the backend on file uploading.
@@ -54,13 +54,18 @@ export interface UploadResponseFormat<AdditionalFileData = {}> {
   /**
    * Object with file data.
    *             'url' is required,
+   *             'preview' is required,
    *             also can contain any additional data that will be saved and passed back
    */
   file: {
     /**
      * The URL of the uploaded image.
      */
-    url: string;
+    url?: string;
+    /**
+     * The preview URL of the uploaded image.
+     */
+    preview?: string;
   } & AdditionalFileData;
 }
 
@@ -90,13 +95,17 @@ export type ImageToolData<Actions = {}, AdditionalFileData = {}> = {
 
   /**
    * Object containing the URL of the image file.
-   * Also can contain any additional data.
+   * Also, can contain any additional data.
    */
   file: {
     /**
      * The URL of the image.
      */
-    url: string;
+    url?: string;
+    /**
+     * The preview URL of the image.
+     */
+    preview?: string;
   } & AdditionalFileData;
 } & (Actions extends Record<string, boolean> ? Actions : {});
 
@@ -224,5 +233,9 @@ export type ImageSetterParam = {
   /**
    * url path of the image
    */
-  url: string;
+  url?: string;
+  /**
+   * preview url path of the image
+   */
+  preview?: string;
 };

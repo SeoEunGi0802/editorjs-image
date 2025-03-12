@@ -212,7 +212,7 @@ export default class ImageTool implements BlockTool {
    * @returns false if saved data is not correct, otherwise true
    */
   public validate(savedData: ImageToolData): boolean {
-    return !!savedData.file.url;
+    return !(savedData.file.preview == null);
   }
 
   /**
@@ -418,10 +418,10 @@ export default class ImageTool implements BlockTool {
    * @param file - uploaded file data
    */
   private set image(file: ImageSetterParam | undefined) {
-    this._data.file = file || { url: '' };
+    this._data.file = file || { preview: '' };
 
-    if (file && file.url) {
-      this.ui.fillImage(file.url);
+    if (file && (file.preview != null)) {
+      this.ui.fillImage(file.preview);
     }
   }
 
@@ -460,7 +460,7 @@ export default class ImageTool implements BlockTool {
     if (tuneName === 'caption') {
       this.ui.applyTune(tuneName, state);
 
-      if (state == false) {
+      if (!state) {
         this._data.caption = '';
         this.ui.fillCaption('');
       }
