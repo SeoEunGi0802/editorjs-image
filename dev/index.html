@@ -7,29 +7,34 @@
   </head>
   <body>
     <div id="editorjs"></div>
+
+    <div class="ce-example__button" id="saveButton">
+      editor.save()
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script><!-- Quote -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script><!-- Code -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script><!-- Table -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+
     <script type="module">
       import ImageTool from "../src/index.ts";
+
       const editor = new EditorJS({
+        readOnly: false,
+
         holder: "editorjs",
-        data: {
-          time: 1700475383740,
-          blocks: [
-            {
-              id: "hZAjSnqYMX",
-              type: "image",
-              data: {
-                file: {
-                  url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                },
-                withBorder: false,
-                withBackground: false,
-                stretched: false,
-                caption: "kimitsu no yayiba",
-              },
-            },
-          ],
-        },
 
         tools: {
           image: {
@@ -48,6 +53,55 @@
             },
           },
         },
+
+        data: {
+          time: 1700475383740,
+          blocks: [
+            {
+              id: "9802bjaAA2",
+              type: "image",
+              data: {
+                caption: "",
+                withBorder: true,
+                withBackground: false,
+                stretched: false,
+                file: {
+                  url: "editor/99/8561a264-6536-4894-bd29-d25b32fca273",
+                  preview: "https://minio-api.seoeungi.work/dev-planverse/editor/99/159bac32-5a09-4d09-8ef7-0097699ba55b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=YFSNuSLZI3ww4ALMO6Ja%2F20250312%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20250312T135601Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=9f7350ecd4114d0baa2361e2e9259999f664c464f594a144d9127eafb80b70df",
+                },
+              },
+            },
+          ],
+        },
+
+        onReady: function(){
+          saveButton.click();
+        },
+        onChange: function(api, event) {
+          console.log('something changed', event);
+        }
+      });
+
+      const saveButton = document.getElementById('saveButton');
+
+      const toggleReadOnlyButton = document.getElementById('toggleReadOnlyButton');
+      const readOnlyIndicator = document.getElementById('readonly-state');
+
+      saveButton.addEventListener('click', function () {
+        editor.save()
+        .then((savedData) => {
+          console.log("savedData", savedData);
+          // cPreview.show(savedData, document.getElementById("output"));
+        })
+        .catch((error) => {
+          console.error('Saving error', error);
+        });
+      });
+
+      toggleReadOnlyButton.addEventListener('click', async () => {
+        const readOnlyState = await editor.readOnly.toggle();
+
+        readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
       });
     </script>
   </body>
